@@ -1,1 +1,1 @@
-web: scripts/web.sh
+web: web.sh
