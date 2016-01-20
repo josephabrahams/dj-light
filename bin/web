@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$(echo $DEBUG | tr '[:upper:]' '[:lower:]')" = "true" ]; then
+    PYTHONUNBUFFERED=True python web.py runserver $PORT
+else
+    waitress-serve --port=$PORT web:application
+fi
