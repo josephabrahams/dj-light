@@ -1,5 +1,6 @@
 *.py[co]
 .DS_Store
 .env
-/public
+/public/media
+/public/static
 /venv

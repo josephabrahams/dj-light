@@ -12,18 +12,27 @@ from whitenoise.django import DjangoWhiteNoise
 
 BASE_DIR = dirname(abspath(__file__))
 
-DEBUG = environ.get('DEBUG', '').lower() == 'true'
-
-SECRET_KEY = environ.get('SECRET_KEY', urandom(32))
-
 ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+DEBUG = environ.get('DEBUG', '').lower() == 'true'
+SECRET_KEY = environ.get('SECRET_KEY', urandom(32))
 
 
 settings.configure(
-    DEBUG=DEBUG,
-    SECRET_KEY=SECRET_KEY,
     ALLOWED_HOSTS=ALLOWED_HOSTS,
+    DEBUG=DEBUG,
+    INSTALLED_APPS=(
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.staticfiles',
+    ),
+    MIDDLEWARE_CLASSES=(
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ),
     ROOT_URLCONF=__name__,
+    SECRET_KEY=SECRET_KEY,
+    SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https'),
     STATIC_ROOT=normpath(join(BASE_DIR, 'public', 'static')),
     STATIC_URL='/static/',
     STATICFILES_DIRS=(
@@ -40,17 +49,7 @@ settings.configure(
             },
         },
     ],
-    INSTALLED_APPS=(
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.staticfiles',
-    ),
-    MIDDLEWARE_CLASSES=(
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    ),
-    SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https'),
+    WHITENOISE_ROOT=normpath(join(BASE_DIR, 'public')),
 )
 
 
@@ -63,8 +62,7 @@ urlpatterns = (
 )
 
 
-application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+application = DjangoWhiteNoise(get_wsgi_application())
 
 
 if __name__ == '__main__':
