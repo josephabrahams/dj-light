@@ -1,4 +1,4 @@
-from os import environ, urandom
+from os import environ
 from os.path import abspath, dirname, join, normpath
 import sys
 
@@ -14,7 +14,7 @@ BASE_DIR = dirname(abspath(__file__))
 
 ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 DEBUG = environ.get('DEBUG', '').lower() == 'true'
-SECRET_KEY = environ.get('SECRET_KEY', urandom(32))
+SECRET_KEY = environ.get('SECRET_KEY')
 
 
 settings.configure(

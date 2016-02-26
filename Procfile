@@ -1,1 +1,1 @@
-web: bin/web
+web: waitress-serve --port=$PORT web:application

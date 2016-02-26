@@ -1,0 +1,1 @@
+web: PYTHONUNBUFFERED=True python web.py runserver $PORT

@@ -6,13 +6,12 @@ A Heroku-ready Django-based Flask replacement.
 
     $ mkvirtualenv --python=$(which python3) tiny-django
     $ pip install -r requirements.txt
-    $ echo "DEBUG=True" >> .env
-    $ echo "PORT=5000" >> .env
-    $ foreman start
+    $ pip cp .env.example .env
+    $ foreman start -f Procfile.dev
+    $ open "http://localhost:5000"
 
 ## Heroku Setup
 
-    $ heroku apps:create
     $ heroku config:set ALLOWED_HOSTS=tiny-django.herokuapp.com
     $ heroku config:set DISABLE_COLLECTSTATIC=1
     $ heroku config:set SECRET_KEY={{ secret_key }}
